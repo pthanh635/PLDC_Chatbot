@@ -1,0 +1,14 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.8
+python-dotenv>=1.0
+transformers>=4.46
+accelerate>=1.0
+torch>=2.3
+sentence-transformers>=3.1
+faiss-cpu>=1.8
+pypdf>=5.0
+numpy>=1.26
+# Optional for LOAD_IN_4BIT=true. If installation fails on your Windows setup,
+# keep LOAD_IN_4BIT=false and load FP16 instead.
+bitsandbytes>=0.44; platform_system != "Windows"

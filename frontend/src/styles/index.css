@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-sentgray-25: #f6f6f6;
+  --color-sentgray-50: #f5f5f5;
+  --color-sentgray-100: #f4f4f4;
+  --color-sentgray-150: #f1f1f1;
+  --color-sentgray-200: #e5e5e5;
+  --color-sentgray-250: #d9d9d9;
+  --color-sentgray-300: #d7d7d7;
+  --color-sentgray-400: #a9a9a9;
+  --color-sentgray-500: #aeaeae;
+  --color-sentgray-550: #9c9c9c;
+  --color-sentgray-600: #848888;
+  --color-sentgray-700: #808080;
+  --color-sentgray-800: #707070;
+  --color-sentgray-900: #212222;
+}
+
+.font-jakarta {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+.font-nunito {
+  font-family: "Nunito Sans", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+button,
+button * {
+  @apply hover:cursor-pointer disabled:cursor-not-allowed;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.animated-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #000000 0%,
+    rgba(132, 136, 136, 0.4) 51.63%
+  );
+  background-size: 200% 100%;
+  background-position: 0% 0%;
+  animation: gradient-move 1s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
+.blinking-cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
