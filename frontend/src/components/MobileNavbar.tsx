@@ -2,8 +2,17 @@ import React from "react";
 import { Icon } from "./Icon";
 import { navigationItems } from "../utils/constants";
 import classNames from "classnames";
+import type { Page } from "../utils/constants";
 
-export const MobileNavbar: React.FC = () => {
+interface MobileNavbarProps {
+  page: Page;
+  onNavigate: (page: Page) => void;
+}
+
+export const MobileNavbar: React.FC<MobileNavbarProps> = ({
+  page,
+  onNavigate,
+}) => {
   return (
     <>
       <nav className="md:hidden w-full bg-white border-t border-sentgray-200">
@@ -11,22 +20,22 @@ export const MobileNavbar: React.FC = () => {
           {navigationItems.map((item) => (
             <button
               key={item.label}
+              onClick={() => onNavigate(item.page)}
               className={`w-20 flex flex-col items-center ${
-                item.active ? "text-sentgray-900" : "text-sentgray-600"
+                page === item.page ? "text-sentgray-900" : "text-sentgray-600"
               }`}
-              disabled={item.disabled}
             >
               <div
                 className={classNames(
                   "w-full h-1 rounded-bl-2xl rounded-br-2xl",
-                  item.active ? "bg-sentgray-900" : ""
+                  page === item.page ? "bg-sentgray-900" : ""
                 )}
               ></div>
               <div className="flex flex-col items-center p-2 rounded-lg ">
                 <Icon
                   name={item.icon}
                   size={22}
-                  color={item.active ? "#212222" : "#A9A9A9"}
+                  color={page === item.page ? "#212222" : "#A9A9A9"}
                   className="mb-1"
                 />
                 <span className="text-base">{item.label}</span>

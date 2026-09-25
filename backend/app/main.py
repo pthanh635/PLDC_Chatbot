@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.app.schemas import (
@@ -221,6 +223,41 @@ def health():
 @app.get("/modes")
 def modes():
     return MODE_LABELS
+
+
+def textbook_path() -> Path:
+    pdf_path = (
+        Path(__file__).resolve().parents[2]
+        / "data"
+        / "Bai-giang-Phap-luat-dai-cuong.pdf"
+    )
+    if not pdf_path.is_file():
+        raise HTTPException(
+            status_code=404,
+            detail="Không tìm thấy giáo trình Pháp luật đại cương.",
+        )
+    return pdf_path
+
+
+@app.head("/documents/pldc")
+@app.get("/documents/pldc")
+def pldc_document():
+    return FileResponse(
+        textbook_path(),
+        media_type="application/pdf",
+        filename="Bai-giang-Phap-luat-dai-cuong.pdf",
+        content_disposition_type="inline",
+    )
+
+
+@app.get("/documents/pldc/download")
+def download_pldc_document():
+    return FileResponse(
+        textbook_path(),
+        media_type="application/pdf",
+        filename="Bai-giang-Phap-luat-dai-cuong.pdf",
+        content_disposition_type="attachment",
+    )
 
 
 # ============================================================

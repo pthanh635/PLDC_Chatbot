@@ -5,12 +5,19 @@ import { navigationItems } from "../utils/constants";
 import classNames from "classnames";
 import { AvatarBtn } from "./AvatarBtn";
 import { AddChatBtn } from "./AddChatBtn";
+import type { Page } from "../utils/constants";
 
 interface ISidebarProps {
   onCreateNewChat: () => void;
+  page: Page;
+  onNavigate: (page: Page) => void;
 }
 
-export const Sidebar: React.FC<ISidebarProps> = ({ onCreateNewChat }) => {
+export const Sidebar: React.FC<ISidebarProps> = ({
+  onCreateNewChat,
+  page,
+  onNavigate,
+}) => {
   return (
     <>
       <aside className="hidden md:flex flex-col justify-between group bg-sentgray-50 border-r border-sentgray-200 transition-all duration-300 w-[64px] hover:w-[250px]">
@@ -18,7 +25,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({ onCreateNewChat }) => {
           <div className="flex items-center">
             <img src={logo} alt="Logo" className="w-8 h-8" />
             <span className="ml-2 pb-1 text-2xl font-semibold text-sentgray-900 overflow-hidden transition-all duration-300 opacity-0 max-w-0 scale-x-0 group-hover:opacity-100 group-hover:max-w-[160px] group-hover:scale-x-100 origin-left whitespace-nowrap">
-              Chatbot Pháp luật đại cương
+              LegalGPT
             </span>
           </div>
         </div>
@@ -28,20 +35,20 @@ export const Sidebar: React.FC<ISidebarProps> = ({ onCreateNewChat }) => {
             <button
               key={item.label}
               className="w-full flex items-stretch justify-between"
-              disabled={item.disabled}
+              onClick={() => onNavigate(item.page)}
             >
               <div
                 className={classNames(
                   "w-full flex pl-5 py-3 text-left transition-colors",
-                  item.disabled
-                    ? "text-sentgray-400 cursor-not-allowed"
-                    : "text-sentgray-900 hover:cursor-pointer"
+                  page === item.page
+                    ? "text-sentgray-900"
+                    : "text-sentgray-600 hover:text-sentgray-900"
                 )}
               >
                 <Icon
                   name={item.icon}
                   size={22}
-                  color={item.active ? "#212222" : "#A9A9A9"}
+                  color={page === item.page ? "#212222" : "#A9A9A9"}
                 />
                 <span className="ml-3 font-semibold overflow-hidden transition-all duration-300 opacity-0 max-w-0 scale-x-0 group-hover:opacity-100 group-hover:max-w-[120px] group-hover:scale-x-100 origin-left whitespace-nowrap">
                   {item.label}
@@ -50,7 +57,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({ onCreateNewChat }) => {
               <div
                 className={classNames(
                   "h-full w-2 rounded-tl-2xl rounded-bl-2xl",
-                  item.active ? "bg-sentgray-900" : ""
+                  page === item.page ? "bg-sentgray-900" : ""
                 )}
               ></div>
             </button>

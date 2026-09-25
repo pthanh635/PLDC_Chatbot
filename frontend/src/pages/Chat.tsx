@@ -3,6 +3,7 @@ import { ChatArea } from "../components/ChatArea";
 import { ChatInput } from "../components/ChatInput";
 import { v4 as uuid } from "uuid";
 import { sendChat } from "../api/chat";
+import { loadConversation, saveConversation } from "../utils/chatStorage";
 import type {
   IChatSequence,
   IReceivedMessage,
@@ -13,9 +14,13 @@ import type {
 import { Icon } from "../components/Icon";
 
 interface IChatProps {
-  currChatIdx: number;
+  conversationId: string;
+  onConversationChanged: () => void;
 }
-const Chat: React.FC<IChatProps> = ({ currChatIdx }) => {
+const Chat: React.FC<IChatProps> = ({
+  conversationId,
+  onConversationChanged,
+}) => {
   const [sentMessages, setSentMessages] = useState<ISentMessage[]>([]);
   const [receivedMessages, setReceivedMessages] = useState<IReceivedMessage[]>(
     []
@@ -26,6 +31,33 @@ const Chat: React.FC<IChatProps> = ({ currChatIdx }) => {
   const chatTitle = useMemo(() => {
     return sentMessages.length > 0 ? sentMessages[0].content.text : "";
   }, [sentMessages]);
+
+  useEffect(() => {
+    const conversation = loadConversation(conversationId);
+    setSentMessages(conversation?.sentMessages ?? []);
+    setReceivedMessages(conversation?.receivedMessages ?? []);
+    setChatSequence(conversation?.chatSequence ?? []);
+    setLoadingStep(0);
+  }, [conversationId]);
+
+  useEffect(() => {
+    if (!sentMessages.length) return;
+    saveConversation({
+      id: conversationId,
+      title: sentMessages[0].content.text,
+      updatedAt: new Date().toISOString(),
+      sentMessages,
+      receivedMessages,
+      chatSequence,
+    });
+    onConversationChanged();
+  }, [
+    chatSequence,
+    conversationId,
+    onConversationChanged,
+    receivedMessages,
+    sentMessages,
+  ]);
 
   const onStartLoading = async (question: string, mode: LegalMode) => {
     setLoadingStep(1);
@@ -85,17 +117,6 @@ const Chat: React.FC<IChatProps> = ({ currChatIdx }) => {
     };
     setReceivedMessages(newReceivedMsgs);
   };
-
-  const onResetChat = () => {
-    setSentMessages([]);
-    setReceivedMessages([]);
-    setChatSequence([]);
-    setLoadingStep(0);
-  };
-
-  useEffect(() => {
-    onResetChat();
-  }, [currChatIdx]);
 
   return (
     <div className="min-h-0 relative w-full flex-grow font-jakarta flex justify-center">

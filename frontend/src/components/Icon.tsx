@@ -100,6 +100,26 @@ const iconDefinitions: Record<string, IconDefinition> = {
     ],
     fill: true,
   },
+  trash: {
+    viewBox: "0 0 24 24",
+    paths: [
+      "M4 7H20",
+      "M10 11V17",
+      "M14 11V17",
+      "M6 7L7 20H17L18 7",
+      "M9 7V4H15V7",
+    ],
+    strokeWidth: "1.8",
+  },
+  download: {
+    viewBox: "0 0 24 24",
+    paths: [
+      "M12 3V15",
+      "M7 10L12 15L17 10",
+      "M5 20H19",
+    ],
+    strokeWidth: "1.8",
+  },
 };
 
 export const Icon: React.FC<IconProps> = ({

@@ -46,3 +46,12 @@ export interface IChatSequence {
   id: string;
   type: "sent" | "received";
 }
+
+export interface StoredConversation {
+  id: string;
+  title: string;
+  updatedAt: string;
+  sentMessages: ISentMessage[];
+  receivedMessages: IReceivedMessage[];
+  chatSequence: IChatSequence[];
+}

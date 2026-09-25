@@ -198,7 +198,7 @@ export const ChatArea: React.FC<IChatAreaProps> = (props) => {
                               </p>
                               {source.score !== null && (
                                 <p className="mt-1 text-gray-400">
-                                  Độ phù hợp: {source.score.toFixed(3)}
+                                  Score: {source.score.toFixed(3)}
                                 </p>
                               )}
                             </details>

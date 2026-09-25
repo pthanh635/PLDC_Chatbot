@@ -20,7 +20,7 @@ export const ChatInput: React.FC<IChatInputProps> = (props) => {
   const suggestedPrompts = [
     "Pháp luật là gì?",
     "So sánh vi phạm hành chính và vi phạm dân sự.",
-    "Cấu thành vi phạm pháp luật gồm những yếu tố nào?",
+    "Chế định pháp luật là một hệ thống các quy phạm pháp luật điều chỉnh các quan hệ xã hội cùng loại, trong một lĩnh vực nhất định của đời sống xã hội.",
     "Phân tích một tình huống vi phạm pháp luật theo 4 yếu tố cấu thành.",
   ];
   const modes: { label: string; value: LegalMode }[] = [
