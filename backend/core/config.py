@@ -41,6 +41,7 @@ class Settings:
     )
 
     load_in_4bit: bool = _as_bool("LOAD_IN_4BIT", False)
+    mock_llm: bool = _as_bool("MOCK_LLM", True)
     rag_required: bool = _as_bool("RAG_REQUIRED", True)
 
     max_new_tokens: int = _as_int("MAX_NEW_TOKENS", 900)
